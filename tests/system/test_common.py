@@ -32,7 +32,11 @@ def test_ensure_inside_test_venv(putup):
     # Here we ensure `putup` is installed inside tox so we know we are testing the
     # correct version of pyscaffold and not one the devs installed to use in other
     # projects
-    assert ".tox" in putup
+    #
+    # In some cases we might need to skip this test, like for running tests in the
+    # conda-forge feedstock. Do this by setting PYSCAFFOLD_SKIP_VENV_TEST=1.
+    if os.environ.get("PYSCAFFOLD_SKIP_VENV_TEST") != "1":
+        assert ".tox" in putup
 
 
 BUILD_DEPS = ["wheel", "setuptools_scm"]
